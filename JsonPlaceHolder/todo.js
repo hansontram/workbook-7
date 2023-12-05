@@ -3,19 +3,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const submitButton = document.getElementById("submitButton");
 
-    submitButton.addEventListener("click", (event) => {
-        // Prevent the default form submission behavior
-        event.preventDefault();
-
-        // Call your displayInfo function
-        displayInfo();
-    });
+ 
+    submitButton.addEventListener("click", displayInfo)
+    
+    
+   
 });
 
 const displayInfo = () => {
-    let userNumber = document.getElementById("todoId").value;
-    console.log(userNumber);
-    let url = `https://jsonplaceholder.typicode.com/todos/${userNumber}`;
-    console.log(url);
-    // Add any other code related to displaying information here
+    let todoId = document.getElementById("todoId").value;
+    console.log(todoId);
+    let url = `https://jsonplaceholder.typicode.com/todos/${todoId}`;
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(todo => {
+
+            let details = document.getElementById("details")
+            details.innerHTML = ""
+            let title = document.createElement("h6")
+            title.innerText = todo.title;
+            details.appendChild(title);
+            let complete = document.createElement("p")
+            complete.innerText = `completed: ${todo.completed}`
+            details.appendChild(complete)
+        })
+
+    
 };
+
+
+
+// let url = "https://jsonplaceholder.typicode.com/todos/"
+// function displayToDoDetails() {
+//     let todoId = document.getElementById("todoId").value;
+
+//     fetch(`${url}${todoId}`)
+//         .then(response => response.json())
+//         .then(todo => {
+
+//             let details = document.getElementById("details")
+//             details.innerHTML = ""
+//             let title = document.createElement("h6")
+//             title.innerText = todo.title;
+//             details.appendChild(title);
+//             let complete = document.createElement("p")
+//             complete.innerText = `completed: ${todo.completed}`
+//             details.appendChild(complete)
+//         })
+
+
+
+// }
